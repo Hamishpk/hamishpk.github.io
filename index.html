@@ -1,1 +1,75 @@
-Hello World
+<html>
+<head>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js'> </script>
+</head>
+<body>
+</body>
+
+<div class="form-group">
+  <input type="text" class="form-control" align="middle" id='source_text' style='width: 500px;'>
+</div>
+
+<div>
+<textarea id='target_text' style='width: 500px; height: 500px;'>
+</textarea>
+</div>
+
+<script>
+    $("#source_text").on("keydown input propertychange", function(e) {
+        var _temp = $("#source_text").val();
+
+        if (!e.keyCode && !!_temp && _temp.substring(_temp.length - 1, _temp.length) == '.'){
+            var currentText = $("#source_text").val();
+            console.log(currentText);
+            var result = currentText.replace('swe.', 'software engineer');
+            result = result.replace('swd.', 'software developer');
+            console.log(result)
+            $("#source_text").val(result);
+        }
+        if (e.keyCode === 13) {
+            var newText = '';
+            var result;
+            var existingText = $("#target_text").val();
+            var currentText = $("#source_text").val();
+            if (!!currentText && currentText.indexOf('\n') == 0 ) {
+                currentText = currentText.substring(1, currentText.length);
+            }
+            if (currentText.indexOf(',') !== -1) {
+                var splitText = currentText.split(', ');
+                splitText.forEach(function(element) {
+                    var text;
+                    if (element.indexOf(' ') !== -1) {
+                        text = '"' + element + '"';
+                    } else {
+                        text = element;
+                    }
+                    if (!!newText) {
+                        newText = newText + ' OR ' + text
+                    } else {
+                        newText += text;
+                    }
+
+                })
+                newText = '(' +  newText + ')';
+            } else {
+                if (currentText.indexOf(' ') !== -1) {
+                    newText = '"' + currentText + '"';
+                } else {
+                    newText = currentText;
+                }
+            }
+            if (!!existingText) {
+                result = existingText + ' AND ' + newText;
+            } else {
+                result = newText;
+            }
+            if (!!result) {
+                $("#target_text").val(result);
+                $("#source_text").val('');
+            }
+        }
+
+    });
+</script>
+
+</html>
