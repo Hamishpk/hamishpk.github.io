@@ -1,17 +1,50 @@
 <html>
+
 <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js'> </script>
 </head>
-<body>
-</body>
+<div class="container">
+<h1>String Builder</h1>
 
-<div class="form-group">
-  <input type="text" class="form-control" align="middle" id='source_text' style='width: 500px;'>
+<div class="d-flex">
+  <div class="mr-auto p-2">
+
+    <div class="form-group">
+      <input type="text" class="form-control" align="middle" id='source_text' style='width: 600px;'>
+    </div>
+
+    <div>
+      <textarea id='target_text' style='width: 600px; height: 200px;'></textarea>
+    </div>
+  </div>
+
+  <div class="p-2">
+    <div class="jumbotron" style='height: 255px; padding:40px 0'>
+      <div class="container">
+        <h6>For Linkedin:</h6>
+        <p style="font-size:12px">
+            Type a key word into the top bar, hitting enter each time you want an 'AND' (not actually necessary so not included). <br>
+            Sperate key words with ', ' then hit enter for 'OR'. <br>
+            Program will automatically add speach marks on space sperated key words. <br>
+        </p>
+
+      </div>
+    </div>
+  </div>
 </div>
 
-<div>
-<textarea id='target_text' style='width: 500px; height: 500px;'>
-</textarea>
+<div class="jumbotron" style='height: 200px; padding:25px 0'>
+  <div class="container">
+    <h6>Shortcuts:</h6>
+    <p style="font-size:12px">
+      swe. = software Engineer <br>
+      swd. = software Developer <br>
+      sys. = systems Design <br>
+      alg. = algorithms <br>
+
+    </p>
+  </div>
 </div>
 
 <script>
@@ -20,10 +53,11 @@
 
         if (!e.keyCode && !!_temp && _temp.substring(_temp.length - 1, _temp.length) == '.'){
             var currentText = $("#source_text").val();
-            console.log(currentText);
             var result = currentText.replace('swe.', 'software engineer');
             result = result.replace('swd.', 'software developer');
-            console.log(result)
+            result = result.replace('sys.', 'system design');
+            result = result.replace('alg.', 'algorithms');
+
             $("#source_text").val(result);
         }
         if (e.keyCode === 13) {
@@ -34,6 +68,7 @@
             if (!!currentText && currentText.indexOf('\n') == 0 ) {
                 currentText = currentText.substring(1, currentText.length);
             }
+
             if (currentText.indexOf(',') !== -1) {
                 var splitText = currentText.split(', ');
                 splitText.forEach(function(element) {
@@ -59,7 +94,7 @@
                 }
             }
             if (!!existingText) {
-                result = existingText + ' AND ' + newText;
+                result = existingText + ' ' + newText;
             } else {
                 result = newText;
             }
@@ -71,5 +106,6 @@
 
     });
 </script>
+
 
 </html>
